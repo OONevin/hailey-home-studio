@@ -1,50 +1,61 @@
-# Hailey Home Studio LLC — marketing website (preview build)
+# Hailey Home Studio LLC — marketing website (v2, "One call. Every vendor.")
 
-Static site: plain HTML/CSS with a little vanilla JS. No build step, no frameworks, no paid APIs.
-Fonts load from Google Fonts (Cormorant Garamond + Jost, both free).
-**Status: PREVIEW ONLY.** It hasn't been deployed, and no repo has been created.
+Pure static site: plain HTML/CSS with a little vanilla JS. **No build step, no frameworks, no paid APIs.**
+Fonts load from Google Fonts: **Fraunces** (display serif) + **Inter Tight** (grotesk), both free.
+
+- Repo: https://github.com/OONevin/hailey-home-studio (GitHub Pages, branch `main`, root)
+- Live preview: https://oonevin.github.io/hailey-home-studio/
+- The v1 design is backed up outside the repo at `../hailey-home-studio-v1-backup/` and is also in git history.
+
+All internal links and assets are **relative**, so the site works from the `/hailey-home-studio/` subpath and from a custom domain root.
+
+## Design (v2)
+- Palette: burgundy `#7A1F2E` (brand), off-white `#F7F3EE`, ink `#141112`, blush `#EBD8D2`, warm greige `#EFE8E0` / `#D8CFC4`.
+- Oversized editorial type, thin rules, numbered sections, asymmetric grids, full-bleed imagery.
+- Marquee of sourcing categories (cabinetry · tile · stone · lighting · plumbing fixtures · hardware · window treatments · drapery · flooring · appliances).
+- Scroll reveals, hover states, spinning "One call · Every vendor" badge. All motion turns off under `prefers-reduced-motion`.
+- Lightbox (native `<dialog>`) on every project image. Use arrow keys or the buttons to move between images and Esc to close. Without JS, each image link opens the full file.
 
 ## Pages
 | File | Purpose |
 |---|---|
-| `index.html` | Hero with tagline, intro, 4 service highlights, "How it works" strip (Concept & Specification → Sourcing → Ordering & Procurement → Installation), designers/builders/homeowners trio, portfolio teaser, CTA |
-| `services.html` | Full-Service Design · Sourcing & Procurement · Custom Window Treatments (by appointment) · Trade Partnerships · Project Coordination through Installation |
-| `about.html` | Hailey's story, written only from her launch post, plus a headshot placeholder |
-| `portfolio.html` | 8-image gallery cropped from her Facebook posts |
-| `contact.html` | Phone, email, Instagram, service area, and a FormSubmit consultation form |
-| `thank-you.html` | Where the form sends visitors after they submit (noindex) |
-| `404.html` | Not-found page (noindex) |
+| `index.html` | Hero "One call. Every vendor.", full-bleed kitchen, category marquee, **01 For designers & the trade** (usual way vs. HHS way + 4 steps), **02 Meet Hailey / your single point of contact** (headshot), **03 Recent work** grid + full-bleed band, **04 Services**, **05 Who I work with**, CTA |
+| `services.html` | Five services (Full-Service Design, Sourcing & Procurement, Custom Window Treatments by appointment, Trade Partnerships, Project Coordination), 4-step process, "What I source" category grid |
+| `about.html` | Headshot + Hailey's story in first person, taken from her launch post |
+| `portfolio.html` | Large editorial grid of all 8 project images, with lightbox |
+| `contact.html` | Direct contact details + FormSubmit consultation form |
+| `thank-you.html`, `404.html` | Utility pages (noindex) |
 
-Other files: `css/styles.css`, `js/main.js` (mobile nav, sticky header, reveal-on-scroll, FormSubmit `_next`), `favicon.ico/.svg`, `favicon-32.png`, `apple-touch-icon.png`, `icon-512.png`, `site.webmanifest`, `robots.txt`, `sitemap.xml`.
+`css/styles.css`, `js/main.js` (mobile nav, sticky header, reveals, lightbox).
 
-### Images (`images/`)
-- `hs-monogram.svg` (plus `-ivory` and `-gold` versions): clean vector "HS" monogram, rebuilt from Cormorant Garamond letterforms in burgundy #7A1F2E
-- `logo.svg`: full lockup (monogram + "HAILEY HOME STUDIO LLC")
-- `logo-card.png`: tight crop of the logo from the business-card screenshot. This is reference only and is not used on the site.
-- `og-image.jpg`: 1200×630 social share image
-- Project crops: `kitchen-pendants.jpg`, `tile-backsplash.jpg`, `roman-shade-floral.jpg`, `roman-shade-print.jpg`, `drapery-pattern.jpg`, `drapery-sheer.jpg`, `checkerboard-tile.jpg`, `checkerboard-tile-2.jpg`
+## Images (`images/`)
+- `hailey-headshot.jpg` / `.webp`: 1200×1200, optimized from the client photo.
+- Project photos: `kitchen-pendants.jpg`, `tile-backsplash.jpg`, `checkerboard-tile.jpg`, `checkerboard-tile-2.jpg`, `roman-shade-floral.jpg`, `roman-shade-print.jpg`, `drapery-pattern.jpg`, `drapery-sheer.jpg`.
+- **Swapping in full-size originals:** overwrite the files in `images/` with **the same filenames**. Every grid cell uses `object-fit: cover` inside a fixed-height or aspect-ratio box, and each lightbox link points at the same file. Larger originals drop straight in and get sharper with no HTML changes. Update the `width`/`height` attributes if you want them exact; they only prevent layout shift.
+- The current photos are crops from phone screenshots of Facebook posts (about 537–1080 px wide). The layout keeps every image at or below roughly 1.5× its native size at 1280 px and caps full-bleed bands at 1620 px.
+- Monograms/logo: `hs-monogram*.svg`, `logo.svg`; `og-image.jpg` (1200×630) for social sharing.
 
-> **⚠ Image quality note:** All project photos are crops from **phone screenshots of Facebook posts**. They're low resolution, with the collage tiles only about 537 px wide, and the screenshots added compression. That's why the site shows them at modest sizes. **Before launch, get full-size originals from Hailey** and replace the files under the same names (or update the `src` values).
+## Form (FormSubmit)
+- `action="https://formsubmit.co/hailey@haileyhomestudio.com"`, `method="POST"`
+- Hidden: `_subject`, `_captcha=false`, `_template=table`, `_honey` honeypot, and
+  `_next = https://oonevin.github.io/hailey-home-studio/thank-you.html`
+- **⚠ When the `haileyhomestudio.com` domain is connected, change `_next` in `contact.html` to `https://haileyhomestudio.com/thank-you.html`.**
+- FormSubmit sends a one-time activation email to the inbox after the first real submission. Hailey has to click it before any messages are delivered.
+
+## URLs / SEO
+Canonical, Open Graph, JSON-LD, `sitemap.xml` and `robots.txt` all point at `https://haileyhomestudio.com/`, which is the intended production domain. Leave them as they are. If the domain is connected through GitHub Pages, add a `CNAME` file containing `haileyhomestudio.com`.
 
 ## Still needed from the client
-1. **Full-resolution original photos** of every project shown, and any other projects she wants featured. Please include a few landscape shots for the hero.
-2. **A professional headshot** for `about.html`. A striped placeholder box is there now (`.headshot`).
-3. **Confirm the `hailey@haileyhomestudio.com` inbox is live.** FormSubmit sends a one-time activation email to that address after the first real submission. The form won't deliver anything until Hailey clicks the activation link. (Optional: once it's activated, swap the email in the form `action` for the random FormSubmit alias to hide the address from scrapers.)
-4. Approval of all copy. Every line comes from her business card and Facebook posts, with nothing invented: no testimonials, stats, awards, or credentials beyond "11 years."
-5. Optional: the original vector logo file, if she has one. The SVG monogram here is a close recreation, not her designer's master file.
-6. Confirm the domain (`haileyhomestudio.com`) and who hosts it. Canonical URLs, Open Graph tags, the sitemap, and JSON-LD all assume `https://haileyhomestudio.com/`.
-
-## Form details (FormSubmit)
-- `action="https://formsubmit.co/hailey@haileyhomestudio.com"`, `method="POST"`
-- Hidden fields: `_subject`, `_captcha=false`, `_template=table`, `_next` (JS sets this to `<current origin>/thank-you.html`), and the `_honey` honeypot
-- Fields: name, email, phone, I am a (Homeowner/Designer/Builder/Other), project type, message
+1. Full-resolution originals of every project photo, plus any new projects. Landscape shots are best for the full-bleed bands.
+2. Approval of all copy. Nothing is invented: no vendor names, clients, testimonials, stats, pricing or awards. "11 years" is the only figure.
+3. Confirm the `hailey@haileyhomestudio.com` inbox is live (needed for FormSubmit activation).
+4. Optional: the original vector logo file.
 
 ## Preview locally
 ```
-cd hailey-home-studio && python3 -m http.server 8000
-# open http://localhost:8000
+cd hailey-home-studio && python3 -m http.server 8000   # open http://localhost:8000
 ```
-Screenshots from headless Chromium are in `preview/`.
+Headless-Chromium screenshots are in `preview/` (git-ignored).
 
 ## Deploy package
-`../hailey-home-studio-netlify.zip` holds the site files at the zip root, without `preview/` or this README. You can drag it straight into Netlify Drop once it's approved.
+`../hailey-home-studio-netlify.zip` holds the site files at the zip root, without `preview/`, this README or `.git`.
